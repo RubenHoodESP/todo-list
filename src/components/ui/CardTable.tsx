@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import './CardTable.css'
 
 
 export const CardTable = () => {
@@ -20,7 +21,7 @@ export const CardTable = () => {
    * Add a task to the local storage
    */
   function addLocalStorage() {
-    if (add.current !== null) {
+    if (add.current !== null && add.current.value !== '') {
       const value = add.current.value;
       const dbLength = db.length.toString();
       const key = dbLength;
@@ -63,7 +64,7 @@ export const CardTable = () => {
   }
 
   return (
-    <div className="p-4 border shadow">
+    <div className="p-4 border shadow bg-light">
       <div className="row">
         <div className="col">
           <ul>
@@ -72,21 +73,24 @@ export const CardTable = () => {
               <button className='btn btn-primary' onClick={addLocalStorage}>Add</button>
             </div>
             {db.length > 0 && Object.values(db).map((item) => (
+              <div className="border shadow mb-4 p-3">
                 <div className="form-check" key={item}>
-                  <svg onClick={() => deleteTask(item)} xmlns="http://www.w3.org/2000/svg" height="20" width="20">
-                    <path d="M6.5 17q-.625 0-1.062-.438Q5 16.125 5 15.5v-10H4V4h4V3h4v1h4v1.5h-1v10q0 .625-.438 1.062Q14.125 17 13.5 17Zm7-11.5h-7v10h7ZM8 14h1.5V7H8Zm2.5 0H12V7h-1.5Zm-4-8.5v10Z"/>
-                  </svg>
-                  <input className='form-check-input' type="checkbox" value={item} id={item} />
-                  <label className='form-check-label' htmlFor="flexCheckDefault">
-                    {item}
-                  </label>
+                  <div className="d-flex justify-content-between">
+                    <label className='form-check-label' htmlFor="flexCheckDefault">
+                      {item}
+                    </label>
+                    <svg onClick={() => deleteTask(item)} xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+                      <path d="M6.5 17q-.625 0-1.062-.438Q5 16.125 5 15.5v-10H4V4h4V3h4v1h4v1.5h-1v10q0 .625-.438 1.062Q14.125 17 13.5 17Zm7-11.5h-7v10h7ZM8 14h1.5V7H8Zm2.5 0H12V7h-1.5Zm-4-8.5v10Z"/>
+                    </svg>
+                  </div>
                 </div>
+              </div>
               ))}
           </ul>
         </div>
       </div>
-      <div className="d-flex justify-content-between">
-        <button className='btn btn-primary' onClick={deleteAllTasks}>Delete all tasks</button>
+      <div className="d-flex justify-content-between ps-32">
+        <button className='btn btn-danger' onClick={deleteAllTasks}>Delete all tasks</button>
       </div>
     </div>
   )
